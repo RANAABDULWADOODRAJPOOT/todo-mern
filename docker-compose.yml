@@ -1,0 +1,28 @@
+version: '3'
+services:
+  nodeapp:
+    container_name: nodeapp-container
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./node-express-app:/backend/app
+    working_dir: /app
+    command: ["npm", "start"] 
+  nextjs:
+    container_name: nextjs-container
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./nextjs-app:/frontend/app
+    depends_on:
+      - nodeapp
+    working_dir: /app
+    command: ["npm", "start"]
+
+ 
